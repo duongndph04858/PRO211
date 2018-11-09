@@ -74,7 +74,7 @@ public class Base {
 	public List<Object> getByCondition(String table,String condition,String value) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			String hql = "select * from :table where :condition = :value";
+			String hql = "from :table where :condition = :value";
 			Query query = session.createQuery(hql);
 			query.setParameter("table", table);
 			query.setParameter("condition", condition);
