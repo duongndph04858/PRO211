@@ -23,10 +23,10 @@
 			<mvc:exclude-mapping path="/home/index.htm"/> <bean class="interceptor.LoggerInterceptor" 
 			/> </mvc:interceptor> -->
 			
-<!-- 		<mvc:interceptor>
-			<mvc:mapping path="/admin/dashboard/**"/>
-			<bean class="interceptor.AdminInterceptor"/>
-		</mvc:interceptor> -->
+		<mvc:interceptor>
+			<mvc:mapping path="/dashboard/**"/>
+			<bean class="bll.interceptor.DashboardInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 
 </beans>

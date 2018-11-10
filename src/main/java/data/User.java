@@ -13,7 +13,7 @@ public class User {
 	@Column(name="username")
 	private String username;
 
-	@Column(name="password")
+	@Column(name="pass")
 	private String password;
 	
 	@Column(name="fullname")
@@ -23,7 +23,7 @@ public class User {
 	private String address;
 	
 	@Column(name="position")
-	private String position;
+	private boolean position;
 	
 	@Column(name="image")
 	private String image;
@@ -49,7 +49,7 @@ public class User {
 
 
 
-	public User(String username, String password, String fullname, String address, String position, String image,
+	public User(String username, String password, String fullname, String address, boolean position, String image,
 			String phone, String cmnd, String email, boolean isMale) {
 		super();
 		this.username = username;
@@ -141,7 +141,7 @@ public class User {
 	/**
 	 * @return the position
 	 */
-	public String getPosition() {
+	public boolean getPosition() {
 		return position;
 	}
 
@@ -150,7 +150,7 @@ public class User {
 	/**
 	 * @param position the position to set
 	 */
-	public void setPosition(String position) {
+	public void setPosition(boolean position) {
 		this.position = position;
 	}
 
