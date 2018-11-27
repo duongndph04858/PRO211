@@ -6,8 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import bll.AppConstrant;
 import data.User;
+import util.AppConstrant;
 
 public class DashboardInterceptor extends HandlerInterceptorAdapter {
 	@Override
@@ -18,7 +18,7 @@ public class DashboardInterceptor extends HandlerInterceptorAdapter {
 		if (user == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
-		} else if (user.getPosition() == false) {
+		} else if (user.getPosition().getId() > 2) {
 			response.sendRedirect(request.getContextPath() + "/" + AppConstrant.ACCESS_DENIED_URL);
 			return false;
 		}

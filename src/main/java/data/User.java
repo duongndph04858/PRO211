@@ -1,70 +1,64 @@
 package data;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="USERS")
-public class User {
+@Table(name = "USERS")
+public class User implements Manageable {
 
 	@Id
-	@Column(name="username")
+	@Column(name = "username")
 	private String username;
 
-	@Column(name="pass")
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="fullname")
+
+	@Column(name = "fullname")
 	private String fullname;
-	
-	@Column(name="address")
-	private String address;
-	
-	@Column(name="position")
-	private boolean position;
-	
-	@Column(name="image")
-	private String image;
-	
-	@Column(name="phone")
-	private String phone;
-	
-	@Column(name="cmnd")
-	private String cmnd;
-	
-	@Column(name="email")
+
+	@Column(name = "images")
+	private String images;
+
+	@Column(name = "gender")
+	private boolean male;
+
+	@Column(name = "birthday")
+	@Temporal(TemporalType.DATE)
+	private Date birthday;
+
+	@Column(name = "email")
 	private String email;
-	
-	@Column(name="gender")
-	private boolean isMale;
 
-	
-	
+	@Column(name = "address")
+	private String address;
+
+	@ManyToOne
+	@JoinColumn(name="position")
+	private Roles position;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "status")
+	private int status;
+
+	@Column(name = "descriptions")
+	private String descriptions;
+
+	@Column(name = "classroom")
+	private String classroom;
+
 	public User() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
-
-
-
-	public User(String username, String password, String fullname, String address, boolean position, String image,
-			String phone, String cmnd, String email, boolean isMale) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.fullname = fullname;
-		this.address = address;
-		this.position = position;
-		this.image = image;
-		this.phone = phone;
-		this.cmnd = cmnd;
-		this.email = email;
-		this.isMale = isMale;
-	}
-
-
 
 	/**
 	 * @return the username
@@ -73,16 +67,12 @@ public class User {
 		return username;
 	}
 
-
-
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-
 
 	/**
 	 * @return the password
@@ -91,16 +81,12 @@ public class User {
 		return password;
 	}
 
-
-
 	/**
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 
 	/**
 	 * @return the fullname
@@ -109,8 +95,6 @@ public class User {
 		return fullname;
 	}
 
-
-
 	/**
 	 * @param fullname the fullname to set
 	 */
@@ -118,97 +102,47 @@ public class User {
 		this.fullname = fullname;
 	}
 
-
-
 	/**
-	 * @return the address
+	 * @return the images
 	 */
-	public String getAddress() {
-		return address;
+	public String getImages() {
+		return images;
 	}
 
-
-
 	/**
-	 * @param address the address to set
+	 * @param images the images to set
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setImages(String images) {
+		this.images = images;
 	}
 
-
-
 	/**
-	 * @return the position
+	 * @return the male
 	 */
-	public boolean getPosition() {
-		return position;
+	public boolean isMale() {
+		return male;
 	}
 
-
-
 	/**
-	 * @param position the position to set
+	 * @param male the male to set
 	 */
-	public void setPosition(boolean position) {
-		this.position = position;
+	public void setMale(boolean male) {
+		this.male = male;
 	}
 
-
-
 	/**
-	 * @return the image
+	 * @return the birthday
 	 */
-	public String getImage() {
-		return image;
+	public Date getBirthday() {
+		return birthday;
 	}
 
-
-
 	/**
-	 * @param image the image to set
+	 * @param birthday the birthday to set
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
-
-
-
-	/**
-	 * @return the phone
-	 */
-	public String getPhone() {
-		return phone;
-	}
-
-
-
-	/**
-	 * @param phone the phone to set
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-
-
-	/**
-	 * @return the cmnd
-	 */
-	public String getCmnd() {
-		return cmnd;
-	}
-
-
-
-	/**
-	 * @param cmnd the cmnd to set
-	 */
-	public void setCmnd(String cmnd) {
-		this.cmnd = cmnd;
-	}
-
-
 
 	/**
 	 * @return the email
@@ -217,8 +151,6 @@ public class User {
 		return email;
 	}
 
-
-
 	/**
 	 * @param email the email to set
 	 */
@@ -226,23 +158,93 @@ public class User {
 		this.email = email;
 	}
 
-
-
 	/**
-	 * @return the isMale
+	 * @return the address
 	 */
-	public boolean isMale() {
-		return isMale;
+	public String getAddress() {
+		return address;
 	}
 
-
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	/**
-	 * @param isMale the isMale to set
+	 * @return the position
 	 */
-	public void setMale(boolean isMale) {
-		this.isMale = isMale;
+	public Roles getPosition() {
+		return position;
 	}
-	
-	
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Roles position) {
+		this.position = position;
+	}
+
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the descriptions
+	 */
+	public String getDescriptions() {
+		return descriptions;
+	}
+
+	/**
+	 * @param descriptions the descriptions to set
+	 */
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+
+	/**
+	 * @return the classroom
+	 */
+	public String getClassroom() {
+		return classroom;
+	}
+
+	/**
+	 * @param classroom the classroom to set
+	 */
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
+	}
+
+	@Override
+	public String getType() {
+		return "người dùng";
+	}
+
 }

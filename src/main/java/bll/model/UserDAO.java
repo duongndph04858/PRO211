@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import data.User;
 
 @Component
-public class UserDAO extends Base {
+public class UserDAO extends BaseService {
 
 	@Autowired
 	SessionFactory sessionFactory;
@@ -26,7 +26,7 @@ public class UserDAO extends Base {
 			return user;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return new User();
 		}
 	}
 

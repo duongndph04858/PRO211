@@ -8,67 +8,68 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "BOOK")
-public class Book {
+public class Book implements Manageable {
 
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private int id;
-	
-	@ManyToMany(mappedBy="books",fetch=FetchType.EAGER)
-	private List<Borrow> borrows;
+
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	private List<BookCategory> category;
 
 	@Column(name = "name")
 	private String name;
 
-	@Column(name = "category")
-	private String category;
+	@Column(name = "author")
+	private String author;
+
+	@ManyToOne
+	@JoinColumn(name = "publisher")
+	private Publisher publisher;
 
 	@Column(name = "price")
 	private long price;
 
-	@Column(name = "insert_date")
+	@ManyToOne
+	@JoinColumn(name = "shelf")
+	private BookShelf bookshelf;
+
+	private int amount;
+
+	private int status;
+	private String images;
+
+	@Column(name = "date_insert")
 	@Temporal(TemporalType.DATE)
 	private Date insertDate;
 
-	@Column(name = "author")
-	private String author;
+	private String barcode;
 
-	@Column(name = "description")
-	private String description;
+	private String provider;
+
+	@Column(name = "descriptions")
+	private String descriptions;
+
+	@Override
+	public String getType() {
+		return "sách";
+	}
 
 	/**
 	 * 
 	 */
 	public Book() {
-		
-	}
 
-	/**
-	 * @param id
-	 * @param name
-	 * @param category
-	 * @param price
-	 * @param insertDate
-	 * @param author
-	 * @param description
-	 */
-	public Book(int id, String name, String category, long price, Date insertDate, String author, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.category = category;
-		this.price = price;
-		this.insertDate = insertDate;
-		this.author = author;
-		this.description = description;
 	}
 
 	/**
@@ -86,6 +87,20 @@ public class Book {
 	}
 
 	/**
+	 * @return the category
+	 */
+	public List<BookCategory> getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(List<BookCategory> category) {
+		this.category = category;
+	}
+
+	/**
 	 * @return the name
 	 */
 	public String getName() {
@@ -97,48 +112,6 @@ public class Book {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return the category
-	 */
-	public String getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	/**
-	 * @return the price
-	 */
-	public long getPrice() {
-		return price;
-	}
-
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(long price) {
-		this.price = price;
-	}
-
-	/**
-	 * @return the insertDate
-	 */
-	public Date getInsertDate() {
-		return insertDate;
-	}
-
-	/**
-	 * @param insertDate the insertDate to set
-	 */
-	public void setInsertDate(Date insertDate) {
-		this.insertDate = insertDate;
 	}
 
 	/**
@@ -156,33 +129,144 @@ public class Book {
 	}
 
 	/**
-	 * @return the description
+	 * @return the publisher
 	 */
-	public String getDescription() {
-		return description;
+	public Publisher getPublisher() {
+		return publisher;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param publisher the publisher to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
 	}
 
 	/**
-	 * @return the borrows
+	 * @return the price
 	 */
-	public List<Borrow> getBorrows() {
-		return borrows;
+	public long getPrice() {
+		return price;
 	}
 
 	/**
-	 * @param borrows the borrows to set
+	 * @param price the price to set
 	 */
-	public void setBorrows(List<Borrow> borrows) {
-		this.borrows = borrows;
+	public void setPrice(long price) {
+		this.price = price;
 	}
-	
-	
+
+	/**
+	 * @return the bookshelf
+	 */
+	public BookShelf getBookshelf() {
+		return bookshelf;
+	}
+
+	/**
+	 * @param bookshelf the bookshelf to set
+	 */
+	public void setBookshelf(BookShelf bookshelf) {
+		this.bookshelf = bookshelf;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public int getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the images
+	 */
+	public String getImages() {
+		return images;
+	}
+
+	/**
+	 * @param images the images to set
+	 */
+	public void setImages(String images) {
+		this.images = images;
+	}
+
+	/**
+	 * @return the insertDate
+	 */
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+	/**
+	 * @param insertDate the insertDate to set
+	 */
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+	/**
+	 * @return the barcode
+	 */
+	public String getBarcode() {
+		return barcode;
+	}
+
+	/**
+	 * @param barcode the barcode to set
+	 */
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
+	}
+
+	/**
+	 * @return the provider
+	 */
+	public String getProvider() {
+		return provider;
+	}
+
+	/**
+	 * @param provider the provider to set
+	 */
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
+
+	/**
+	 * @return the descriptions
+	 */
+	public String getDescriptions() {
+		return descriptions;
+	}
+
+	/**
+	 * @param descriptions the descriptions to set
+	 */
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+
 
 }

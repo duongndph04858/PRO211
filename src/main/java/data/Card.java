@@ -6,27 +6,31 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "CARD")
-public class Card {
+@Table(name = "CARDS")
+public class Card implements Manageable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
-	private int id;
-
 	@Column(name = "seri")
-	private String seri;
+	private long seri;
 
-	@Column(name = "student_name")
-	private String studentName;
+	@ManyToOne
+	@JoinColumn(name = "username")
+	private User user;
 
-	@Column(name = "student_class")
-	private String studentClass;
+	@Column(name = "fullname")
+	private String fullname;
+
+	@ManyToOne
+	@JoinColumn(name = "card_type")
+	private CardType card;
 
 	@Column(name = "date_create")
 	@Temporal(TemporalType.DATE)
@@ -36,8 +40,19 @@ public class Card {
 	@Temporal(TemporalType.DATE)
 	private Date dateExpire;
 
-	@Column(name = "email")
-	private String email;
+	@Column(name = "status")
+	private int status;
+
+	@Column(name = "loan_time")
+	private int loanTime;
+
+	@Column(name = "descriptions")
+	private String descriptions;
+
+	@Override
+	public String getType() {
+		return "thẻ";
+	}
 
 	/**
 	 * 
@@ -46,80 +61,59 @@ public class Card {
 	}
 
 	/**
-	 * @param id
-	 * @param seri
-	 * @param studentName
-	 * @param studentClass
-	 * @param dateCreate
-	 * @param dateExpire
-	 * @param email
-	 */
-	public Card(int id, String seri, String studentName, String studentClass, Date dateCreate, Date dateExpire,
-			String email) {
-		super();
-		this.id = id;
-		this.seri = seri;
-		this.studentName = studentName;
-		this.studentClass = studentClass;
-		this.dateCreate = dateCreate;
-		this.dateExpire = dateExpire;
-		this.email = email;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	/**
 	 * @return the seri
 	 */
-	public String getSeri() {
+	public long getSeri() {
 		return seri;
 	}
 
 	/**
 	 * @param seri the seri to set
 	 */
-	public void setSeri(String seri) {
+	public void setSeri(long seri) {
 		this.seri = seri;
 	}
 
 	/**
-	 * @return the studentName
+	 * @return the user
 	 */
-	public String getStudentName() {
-		return studentName;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param studentName the studentName to set
+	 * @param user the user to set
 	 */
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
-	 * @return the studentClass
+	 * @return the fullname
 	 */
-	public String getStudentClass() {
-		return studentClass;
+	public String getFullname() {
+		return fullname;
 	}
 
 	/**
-	 * @param studentClass the studentClass to set
+	 * @param fullname the fullname to set
 	 */
-	public void setStudentClass(String studentClass) {
-		this.studentClass = studentClass;
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	/**
+	 * @return the card
+	 */
+	public CardType getCard() {
+		return card;
+	}
+
+	/**
+	 * @param card the card to set
+	 */
+	public void setCard(CardType card) {
+		this.card = card;
 	}
 
 	/**
@@ -151,17 +145,44 @@ public class Card {
 	}
 
 	/**
-	 * @return the email
+	 * @return the status
 	 */
-	public String getEmail() {
-		return email;
+	public int getStatus() {
+		return status;
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param status the status to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
+	/**
+	 * @return the loanTime
+	 */
+	public int getLoanTime() {
+		return loanTime;
+	}
+
+	/**
+	 * @param loanTime the loanTime to set
+	 */
+	public void setLoanTime(int loanTime) {
+		this.loanTime = loanTime;
+	}
+
+	/**
+	 * @return the descriptions
+	 */
+	public String getDescriptions() {
+		return descriptions;
+	}
+
+	/**
+	 * @param descriptions the descriptions to set
+	 */
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
 }
