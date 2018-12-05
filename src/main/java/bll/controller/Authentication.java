@@ -30,7 +30,7 @@ public class Authentication {
 				String logPassword = user.getPassword();
 				if (logUsername.equals(username) && logPassword.equals(password)) {
 					session.setAttribute("user", user);
-					url = "dashboard/home";
+					url = "redirect:/dashboard";
 					redirectAttributes.addFlashAttribute("msg", "Xin chào, " + user.getFullname());
 				}
 			}

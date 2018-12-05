@@ -10,10 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import data.Manageable;
+import data.TransactionLog;
+
 @Component
 public class BaseService {
 	@Autowired
 	SessionFactory sessionFactory;
+
+	@Transactional
+	public void insertLog(TransactionLog tran) {
+		insert(tran);
+	}
 
 	@Transactional
 	public boolean insert(Object object) {
@@ -53,25 +61,25 @@ public class BaseService {
 
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
-	public List<Object> getAll(String table) {
+	public List<Manageable> getAll(String table) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			String hql = "from :table";
 			Query query = session.createQuery(hql);
 			query.setParameter("table", table);
-			List<Object> list = query.list();
+			List<Manageable> list = query.list();
 			if (list == null) {
-				list = new ArrayList<Object>();
+				list = new ArrayList<Manageable>();
 			}
 			return list;
 		} catch (Exception e) {
-			return new ArrayList<Object>();
+			return new ArrayList<Manageable>();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
-	public List<Object> getByCondition(String table,String condition,String value) {
+	public List<Object> getByCondition(String table, String condition, String value) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			String hql = "from :table where :condition = :value";
@@ -88,5 +96,4 @@ public class BaseService {
 			return new ArrayList<Object>();
 		}
 	}
-
 }

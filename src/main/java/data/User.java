@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USERS")
-public class User implements Manageable {
+public class User extends Manageable {
 
 	@Id
 	@Column(name = "username")
@@ -42,7 +42,7 @@ public class User implements Manageable {
 	private String address;
 
 	@ManyToOne
-	@JoinColumn(name="position")
+	@JoinColumn(name = "position")
 	private Roles position;
 
 	@Column(name = "phone")
@@ -242,9 +242,12 @@ public class User implements Manageable {
 		this.classroom = classroom;
 	}
 
-	@Override
 	public String getType() {
 		return "người dùng";
+	}
+
+	public String getName() {
+		return username;
 	}
 
 }

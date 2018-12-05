@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOKSHELF")
-public class BookShelf implements Manageable {
+public class BookShelf extends Manageable {
 
 	@Id
 	private String shelf;
@@ -130,8 +130,11 @@ public class BookShelf implements Manageable {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public String getType() {
 		return "giá sách";
+	}
+
+	public String getName() {
+		return shelf;
 	}
 }

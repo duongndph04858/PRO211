@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CARD_TYPE")
-public class CardType implements Manageable {
+public class CardType extends Manageable {
 
 	@Id
 	private int id;
@@ -121,7 +121,6 @@ public class CardType implements Manageable {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public String getType() {
 		return "loại thẻ";
 	}

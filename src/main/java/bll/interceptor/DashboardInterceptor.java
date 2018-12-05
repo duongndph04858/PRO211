@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import data.User;
 import util.AppConstrant;
@@ -19,6 +21,8 @@ public class DashboardInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect(request.getContextPath() + "/login");
 			return false;
 		} else if (user.getPosition().getId() > 2) {
+			RedirectAttributes reAttributes = new RedirectAttributesModelMap();
+			reAttributes.addFlashAttribute("access-denied", "Tài khoản này không đủ quyền truy cập");
 			response.sendRedirect(request.getContextPath() + "/" + AppConstrant.ACCESS_DENIED_URL);
 			return false;
 		}

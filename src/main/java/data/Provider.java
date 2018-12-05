@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PROVIDER")
-public class Provider implements Manageable {
+public class Provider extends Manageable {
 	@Id
 	@GeneratedValue
 	private int id;
@@ -114,7 +114,6 @@ public class Provider implements Manageable {
 		this.descriptions = descriptions;
 	}
 
-	@Override
 	public String getType() {
 		return "người cung cấp";
 	}

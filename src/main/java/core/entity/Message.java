@@ -7,6 +7,7 @@ public class Message {
 	private String command;
 	private User user;
 	private Manageable obj;
+	private String value;
 
 	/**
 	 * @return the command
@@ -49,7 +50,19 @@ public class Message {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+
+	/**
+	 * @return the value
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 }

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PUBLISHER")
-public class Publisher implements Manageable {
+public class Publisher extends Manageable {
 	@Id
 	@Column(name = "publisher")
 	private String publisher;
@@ -27,7 +27,6 @@ public class Publisher implements Manageable {
 	@Column(name = "descriptions")
 	private String descriptions;
 
-	@Override
 	public String getType() {
 		return "nhà xuất bản";
 	}

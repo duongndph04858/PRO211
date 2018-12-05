@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TRANSACTIONS_ONLINE")
-public class TransactionOnline implements Manageable {
+public class TransactionOnline extends Manageable {
 
 	@Id
 	@GeneratedValue
@@ -160,8 +160,12 @@ public class TransactionOnline implements Manageable {
 		this.descriptions = descriptions;
 	}
 
-	@Override
 	public String getType() {
 		return "đặt trước";
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return String.valueOf(id);
 	}
 }

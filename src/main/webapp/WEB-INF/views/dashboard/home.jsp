@@ -1,101 +1,151 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Trang chủ</title>
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
-    <link href="resources/css/font-awesome.css" rel="stylesheet" />
-    <link href="resources/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<link href="resources/css/style.css" rel="stylesheet">
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+</style>
 </head>
 <body>
 	<div class="wrapper">
-		<header>
-			<section>
-		        <div class="header white-bg">
-		            <!-- <div class="sidebar-toggle-box">
-		                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-		            </div> -->
-		            <!--logo start-->
-		            <a href="dashboard" class="logo">LIBRA<span>RY</span></a>
-		            <!--logo end-->
-
-		            <div class="top-nav ">
-		                <!--search & user info start-->
-		                <ul class="nav pull-right top-menu">
-		                    <li>
-		                        <input type="text" class="form-control search" placeholder="Search">
-		                    </li>
-		                    <!-- user login dropdown start-->
-		                    <li class="dropdown">
-		                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-		                            <img alt="" src="resources/images/avatar1_small.jpg">
-		                            <span class="username">Jhon Doue</span>
-		                            <b class="caret"></b>
-		                        </a>
-		                        <ul class="dropdown-menu extended logout">
-		                            <div class="log-arrow-up"></div>
-		                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-		                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-		                            <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-		                            <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
-		                        </ul>
-		                    </li>
-		                   <!--  <li class="sb-toggle-right">
-		                        <i class="fa  fa-align-right"></i>
-		                    </li> -->
-		                    <!-- user login dropdown end -->
-		                </ul>
-		                <!--search & user info end-->
-		            </div>
-		        </div>
-	    	</section>
-		</header>
-		<main>
-			<div class="menu">
-				<ul class="accordion" id="accordion-1">
-					<li class="dcjq-current-parent"><a href="#">Products</a>
-				        <ul class="sub-menu">
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-				        </ul>
-			    	</li>
-			    	<li class="dcjq-current-parent"><a href="#">Products</a>
-				        <ul class="sub-menu">
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-				        </ul>
-			    	</li>
-			    	<li class="dcjq-current-parent"><a href="#">Products</a>
-				        <ul class="sub-menu">
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-				        </ul>
-			    	</li>
-			    	<li class="dcjq-current-parent"><a href="#">Products</a>
-				        <ul class="sub-menu">
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-		                    <li class="dcjq-current-parent"><a href="#">Product 1</a></li>
-				        </ul>
-			    	</li>
-				</ul>
+		<jsp:include page="_patterns/_header.jsp"></jsp:include>
+		<main> <jsp:include page="_patterns/_menu.jsp"></jsp:include> </main>
+		<section class="top-db">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="title-db">
+						<h2>Dashboard</h2>
+					</div>
+					<img class="banner-dashboard" src="resources/images/banner-1.jpg"
+						alt="">
+				</div>
 			</div>
-		</main> 
+		</section>
+		<section class="info-dashboard">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<div class="dash-tile dash-tile-ocean clearfix animation-pullDown">
+							<div class="dash-tile-header">
+								<div class="dash-tile-options">
+									<div class="btn-group">
+										<a href="#" class="btn btn-default" data-toggle="tooltip"
+											title="" data-original-title="Manage Users"><i
+											class="fa fa-cog"></i></a> <a href="#" class="btn btn-default"
+											data-toggle="tooltip" title=""
+											data-original-title="Statistics"><i
+											class="fa fa-bar-chart-o"></i></a>
+									</div>
+								</div>
+								Tổng số sách
+							</div>
+							<div class="dash-tile-icon">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="dash-tile-text">265k</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<div class="dash-tile dash-tile-ocean clearfix animation-pullDown">
+							<div class="dash-tile-header">
+								<div class="dash-tile-options">
+									<div class="btn-group">
+										<a href="#" class="btn btn-default" data-toggle="tooltip"
+											title="" data-original-title="Manage Users"><i
+											class="fa fa-cog"></i></a> <a href="#" class="btn btn-default"
+											data-toggle="tooltip" title=""
+											data-original-title="Statistics"><i
+											class="fa fa-bar-chart-o"></i></a>
+									</div>
+								</div>
+								Số lần mượn
+							</div>
+							<div class="dash-tile-icon">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="dash-tile-text">265k</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<div class="dash-tile dash-tile-ocean clearfix animation-pullDown">
+							<div class="dash-tile-header">
+								<div class="dash-tile-options">
+									<div class="btn-group">
+										<a href="#" class="btn btn-default" data-toggle="tooltip"
+											title="" data-original-title="Manage Users"><i
+											class="fa fa-cog"></i></a> <a href="#" class="btn btn-default"
+											data-toggle="tooltip" title=""
+											data-original-title="Statistics"><i
+											class="fa fa-bar-chart-o"></i></a>
+									</div>
+								</div>
+								Tổng số người dùng
+							</div>
+							<div class="dash-tile-icon">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="dash-tile-text">265k</div>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<div class="dash-tile dash-tile-ocean clearfix animation-pullDown">
+							<div class="dash-tile-header">
+								<div class="dash-tile-options">
+									<div class="btn-group">
+										<a href="#" class="btn btn-default" data-toggle="tooltip"
+											title="" data-original-title="Manage Users"><i
+											class="fa fa-cog"></i></a> <a href="#" class="btn btn-default"
+											data-toggle="tooltip" title=""
+											data-original-title="Statistics"><i
+											class="fa fa-bar-chart-o"></i></a>
+									</div>
+								</div>
+								Total Users
+							</div>
+							<div class="dash-tile-icon">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="dash-tile-text">265k</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+		<section class="chart">
+			<div class="container">
+				<div class="row">
+					<!-- Graph HTML -->
+					<div id="graph-wrapper">
+						<div class="graph-info">
+							<a href="#" class="visitors">Visitors</a> <a href="#"
+								class="returning">Returning Visitors</a> <a href="#" id="bars"><span></span></a>
+							<a href="#" id="lines" class="active"><span></span></a>
+						</div>
+
+						<div class="graph-container">
+							<div id="graph-lines"></div>
+							<div id="graph-bars"></div>
+						</div>
+					</div>
+					<!-- end Graph HTML -->
+				</div>
+			</div>
+
+		</section>
 	</div>
-    <script type='text/javascript' src="resources/js/jquery.js"></script>
-    <script type='text/javascript' src="resources/js/bootstrap.min.js"></script>
-    <script type='text/javascript' src="resources/js/custom.js"></script>
-    <script type='text/javascript' src='resources/js/jquery.cookie.js'></script>
-	<script type='text/javascript' src='resources/js/jquery.hoverIntent.minified.js'></script>
-	<script type='text/javascript' src='resources/js/jquery.dcjqaccordion.2.7.min.js'></script>
+	<jsp:include page="_patterns/_footer.jsp"></jsp:include>
 </body>
 </html>

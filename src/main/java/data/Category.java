@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CATEGORY")
-public class Category implements Manageable {
+public class Category extends Manageable {
 	@Id
 	@Column(name = "category")
 	private String id;
@@ -86,7 +86,6 @@ public class Category implements Manageable {
 		this.descriptions = descriptions;
 	}
 
-	@Override
 	public String getType() {
 		return "danh mục";
 	}

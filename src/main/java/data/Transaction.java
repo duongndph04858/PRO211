@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TRANSACTIONS_ONLINE")
-public class Transaction implements Manageable {
+public class Transaction extends Manageable {
 
 	@Id
 	@GeneratedValue
@@ -40,7 +40,6 @@ public class Transaction implements Manageable {
 	@Column(name = "descriptions")
 	private String descriptions;
 
-	@Override
 	public String getType() {
 		return "giao dịch";
 	}
@@ -163,6 +162,10 @@ public class Transaction implements Manageable {
 	 */
 	public void setDescriptions(String descriptions) {
 		this.descriptions = descriptions;
+	}
+
+	public String getName() {
+		return String.valueOf(id);
 	}
 
 }
