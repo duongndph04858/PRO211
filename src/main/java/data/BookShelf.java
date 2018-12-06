@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BOOKSHELF")
-public class BookShelf extends Manageable {
+public class BookShelf implements Management {
 
 	@Id
 	private String shelf;

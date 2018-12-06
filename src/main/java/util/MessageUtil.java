@@ -1,40 +1,32 @@
 package util;
 
-import core.entity.Message;
 import data.Manageable;
 import data.Roles;
 import data.User;
 
 public class MessageUtil {
 
-	public static String getDescription(Message msg) {
+	public static String getDescription(Manageable<?> manageable) {
 		String message = "Create message";
 		try {
-			Manageable obj = msg.getObj();
-			String type = obj.getType();
-			String command = msg.getCommand();
-			User user = msg.getUser();
+			String type = manageable.getObj().getType();
+			User user = manageable.getUserDo();
 			if (!type.isEmpty() && user != null) {
 				Roles r = user.getPosition();
-				message = r.getRoles() + " " + user.getFullname() + "(" + user.getUsername() + ") " + command + " "
-						+ type + ": " + msg.getValue();
+				message = r.getRoles() + " " + user.getFullname() + "(" + user.getUsername() + ") " + manageable.getCommand() + " " + type + ": " + manageable.getMessage();
 			}
 			return message;
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return AppConstrant.CORE_ERROR;
 		}
 	}
 
-	public static String getNoticeMsg(Message msg) {
+	public static String getNoticeMsg(Manageable<?> manageable) {
 		String notice = "Create Notice";
 		try {
-			Manageable obj = msg.getObj();
-			String type = obj.getType();
-			String command = msg.getCommand();
-			notice = "Bạn vừa" + command + " " + type + " " + msg.getValue();
+			String type = manageable.getObj().getType();
+			notice = "Bạn vừa" + manageable.getCommand() + " " + type + " " + manageable.getMessage();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return AppConstrant.CORE_ERROR;

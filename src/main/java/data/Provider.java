@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PROVIDER")
-public class Provider extends Manageable {
+public class Provider implements Management {
 	@Id
 	@GeneratedValue
 	private int id;

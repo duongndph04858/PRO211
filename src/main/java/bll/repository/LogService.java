@@ -1,4 +1,4 @@
-package bll.model;
+package bll.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

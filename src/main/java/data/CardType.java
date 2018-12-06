@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CARD_TYPE")
-public class CardType extends Manageable {
+public class CardType implements Management {
 
 	@Id
 	private int id;

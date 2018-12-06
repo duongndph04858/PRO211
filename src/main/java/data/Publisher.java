@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PUBLISHER")
-public class Publisher extends Manageable {
+public class Publisher implements Management {
 	@Id
 	@Column(name = "publisher")
 	private String publisher;

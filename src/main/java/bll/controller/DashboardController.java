@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import bll.model.BaseService;
+import bll.repository.BaseRepository;
+import bll.service.BaseServices;
 import core.entity.Message;
 import data.Manageable;
 import data.TransactionLog;
@@ -24,22 +25,21 @@ import util.MessageUtil;
 public class DashboardController {
 
 	@Autowired
-	BaseService baseService;
+	BaseServices baseService;
 
 	@RequestMapping("dashboard/insert")
-	public String insert(@ModelAttribute Manageable obj, RedirectAttributes redirectAttributes,
+	public String insert(@ModelAttribute Manageable<?> obj, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, ModelMap mm) {
 		String url = AppConstrant.APP_ERROR_URL;
 		TransactionLog tran = new TransactionLog();
-		Message msg = new Message();
 		String descriptions = "";
 		try {
 			String notice = "";
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
-				msg.setCommand("thêm");
-				msg.setObj(obj);
+				obj.setCommand("thêm");
+				obj.setObj(obj);
 				msg.setUser(user);
 				boolean insert = baseService.insert(obj);
 				if (insert) {

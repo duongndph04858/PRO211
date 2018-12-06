@@ -1,4 +1,4 @@
-package bll.model;
+package bll.repository;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import bll.repository.impl.BaseRepositoryImpl;
 import data.User;
 
 @Component
-public class UserDAO extends BaseService {
+public class UserDAO extends BaseRepositoryImpl {
 
 	@Autowired
 	SessionFactory sessionFactory;

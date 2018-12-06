@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USERS")
-public class User extends Manageable {
+public class User implements Management {
 
 	@Id
 	@Column(name = "username")

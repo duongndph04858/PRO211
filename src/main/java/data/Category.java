@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CATEGORY")
-public class Category extends Manageable {
+public class Category implements Management {
 	@Id
 	@Column(name = "category")
 	private String id;

@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "CARDS")
-public class Card extends Manageable {
+public class Card implements Management {
 
 	@Id
 	@GeneratedValue

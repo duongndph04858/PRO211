@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import bll.model.BaseService;
+import bll.repository.BookDAO;
+import bll.repository.impl.BaseRepositoryImpl;
 import data.Book;
 import data.Manageable;
 import util.AppConstrant;
@@ -16,14 +17,13 @@ import util.AppConstrant;
 public class BookController {
 	
 	@Autowired
-	BaseService baseService;
+	BookDAO bookDAO;
 	
 	@RequestMapping("dashboard/management/book")
 	public String getAll(ModelMap mm) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
-			List<Manageable> books = baseService.getAll(Book.class.getName());
-			books.s
+			List<Book> books = bookDAO.getAll();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

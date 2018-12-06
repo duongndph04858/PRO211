@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "TRANSACTIONS_ONLINE")
-public class Transaction extends Manageable {
+public class Transaction implements Management {
 
 	@Id
 	@GeneratedValue
