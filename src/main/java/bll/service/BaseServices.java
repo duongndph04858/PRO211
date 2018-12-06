@@ -6,7 +6,7 @@ import data.Manageable;
 
 public interface BaseServices {
 
-	public boolean insert(Manageable<?> mng);
+	public String insert(Manageable<?> mng);
 
 	public boolean update(Manageable<?> mng);
 

@@ -6,6 +6,7 @@ public abstract class Manageable<T extends Management> {
 	private T obj;
 	private User userDo;
 	private String message;
+	private String status;
 
 	public T getObj() {
 		return obj;
@@ -38,5 +39,21 @@ public abstract class Manageable<T extends Management> {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 
 }

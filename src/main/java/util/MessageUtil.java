@@ -13,7 +13,9 @@ public class MessageUtil {
 			User user = manageable.getUserDo();
 			if (!type.isEmpty() && user != null) {
 				Roles r = user.getPosition();
-				message = r.getRoles() + " " + user.getFullname() + "(" + user.getUsername() + ") " + manageable.getCommand() + " " + type + ": " + manageable.getMessage();
+				message = r.getRoles() + " " + user.getFullname() + "(" + user.getUsername() + ") "
+						+ manageable.getCommand() + " " + type + ": " + manageable.getMessage() + " "
+						+ manageable.getStatus();
 			}
 			return message;
 		} catch (Exception e) {
@@ -26,7 +28,8 @@ public class MessageUtil {
 		String notice = "Create Notice";
 		try {
 			String type = manageable.getObj().getType();
-			notice = "Bạn vừa" + manageable.getCommand() + " " + type + " " + manageable.getMessage();
+			notice = "Bạn vừa" + manageable.getCommand() + " " + type + " " + manageable.getMessage() + " "
+					+ manageable.getStatus();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return AppConstrant.CORE_ERROR;

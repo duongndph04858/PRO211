@@ -31,28 +31,18 @@ public class DashboardController {
 	public String insert(@ModelAttribute Manageable<?> obj, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, ModelMap mm) {
 		String url = AppConstrant.APP_ERROR_URL;
-		TransactionLog tran = new TransactionLog();
-		String descriptions = "";
 		try {
 			String notice = "";
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
-				obj.setCommand("thêm");
-				obj.setObj(obj);
-				msg.setUser(user);
-				boolean insert = baseService.insert(obj);
-				if (insert) {
-					msg.setValue(msg.getValue() + " thành công");
-					notice = MessageUtil.getNoticeMsg(msg);
-					descriptions = MessageUtil.getDescription(msg);
+				obj.setUserDo(user);
+				String result = baseService.insert(obj);
+				if (!AppConstrant.ERROR_CODE.equals(result)) {
 					url = "redirect:/dashboard/home";
-				} else {
-					msg.setValue(msg.getValue() + " thất bại");
-					notice = MessageUtil.getNoticeMsg(msg);
-					descriptions = MessageUtil.getDescription(msg);
-					mm.addAttribute("obj", obj);
-					url = "dashboard/insert-input";
+					if (AppConstrant.UPDATE_CODE.equals(result)) {
+						notice = "Sách đã tồn tại, cập nhật số lượng thành công";
+					}
 				}
 				mm.addAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
 			} else {
@@ -62,54 +52,6 @@ public class DashboardController {
 		} catch (Exception e) {
 			mm.addAttribute(AppConstrant.APP_ERR_MODELATTRIBUTE, AppConstrant.APP_ERROR_MESSAGE);
 			url = AppConstrant.APP_ERROR_URL;
-		} finally {
-			tran.setDateCreate(new Date());
-			tran.setDescriptions(descriptions);
-			baseService.insertLog(tran);
-		}
-		return url;
-	}
-
-	@RequestMapping("dashboard/update")
-	public String update(@ModelAttribute Manageable obj, RedirectAttributes redirectAttributes,
-			HttpServletRequest request, ModelMap mm) {
-		String url = AppConstrant.APP_ERROR_URL;
-		TransactionLog tran = new TransactionLog();
-		Message msg = new Message();
-		String descriptions = "";
-		try {
-			String notice = "";
-			HttpSession session = request.getSession();
-			User user = (User) session.getAttribute("user");
-			if (user != null) {
-				msg.setCommand("cập nhật");
-				msg.setObj(obj);
-				msg.setUser(user);
-				boolean update = baseService.insert(obj);
-				if (update) {
-					msg.setValue(msg.getValue() + " thành công");
-					notice = MessageUtil.getNoticeMsg(msg);
-					descriptions = MessageUtil.getDescription(msg);
-					url = "redirect:/dashboard/home";
-				} else {
-					msg.setValue(msg.getValue() + " thất bại");
-					notice = MessageUtil.getNoticeMsg(msg);
-					descriptions = MessageUtil.getDescription(msg);
-					mm.addAttribute("obj", obj);
-					url = "dashboard/insert-input";
-				}
-				mm.addAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
-			} else {
-				mm.addAttribute("notice", "Phiên làm việc đã kết thúc, vui lòng đăng nhập lại");
-				url = "login";
-			}
-		} catch (Exception e) {
-			mm.addAttribute(AppConstrant.APP_ERR_MODELATTRIBUTE, AppConstrant.APP_ERROR_MESSAGE);
-			url = AppConstrant.APP_ERROR_URL;
-		} finally {
-			tran.setDateCreate(new Date());
-			tran.setDescriptions(descriptions);
-			baseService.insertLog(tran);
 		}
 		return url;
 	}

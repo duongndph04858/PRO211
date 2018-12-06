@@ -1,17 +1,24 @@
 package bll.service.impl;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bll.repository.BaseRepository;
+import bll.repository.BookRepository;
 import bll.service.BaseServices;
+import data.Book;
 import data.Manageable;
+import data.TransactionLog;
+import util.AppConstrant;
+import util.MessageUtil;
 
 @Service
 public class BaseServiceImpl implements BaseServices {
@@ -24,21 +31,53 @@ public class BaseServiceImpl implements BaseServices {
 	@Autowired
 	BaseRepository baseDao;
 
+	@Autowired
+	BookRepository bookDao;
+
 	@Transactional
-	public boolean insert(Manageable<?> mng) {
+	public String insert(Manageable<?> mng) {
+		TransactionLog tran = new TransactionLog();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			baseDao.insert(mng, sessionFactory.getCurrentSession());
-			return true;
+			mng.setCommand(AppConstrant.INSERT);
+			mng.setMessage(mng.getObj().getName());
+			mng.setStatus(AppConstrant.SUCCESS);
+			tran.setUser(mng.getUserDo());
+			if (mng.getObj() instanceof Book) {
+				Book book = (Book) mng.getObj();
+				HashedMap<String, String> conditions = new HashedMap<>();
+				Field[] fields = Book.class.getDeclaredFields();
+				for (Field f : fields) {
+					if (!"id".equals(f.getName())) {
+						conditions.put(f.getName(), f.get(book).toString());
+					}
+				}
+				Book b = bookDao.getByInfo(conditions, session);
+				if (b != null) {
+					mng.setCommand(AppConstrant.UPDATE);
+					int currentAmount = b.getAmount();
+					b.setAmount(currentAmount + book.getAmount());
+					baseDao.update(b, session);
+					return AppConstrant.UPDATE_CODE;
+				}
+			} else {
+				baseDao.insert(mng.getObj(), session);
+			}
+			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
+			mng.setStatus(AppConstrant.FAIL);
 			LOG.error("Fail to insert " + mng);
-			return false;
+			return AppConstrant.ERROR_CODE;
+		} finally {
+			tran.setDescriptions(MessageUtil.getDescription(mng));
+			baseDao.insertTransactionLog(tran, session);
 		}
 	}
 
 	@Transactional
 	public boolean update(Manageable<?> mng) {
 		try {
-			baseDao.update(mng, sessionFactory.getCurrentSession());
+			baseDao.update(mng.getObj(), sessionFactory.getCurrentSession());
 			return true;
 		} catch (Exception e) {
 			LOG.error("Fail to update " + mng);
@@ -69,7 +108,7 @@ public class BaseServiceImpl implements BaseServices {
 			return null;
 		}
 	}
-	
+
 	@Transactional(readOnly = true)
 	public List<Manageable<?>> getAllActive(String table) {
 		try {

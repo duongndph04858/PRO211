@@ -9,16 +9,18 @@ import org.springframework.stereotype.Repository;
 
 import bll.repository.BaseRepository;
 import data.Manageable;
+import data.Management;
+import data.TransactionLog;
 
 @Repository
 public class BaseRepositoryImpl implements BaseRepository {
 
-	public void insert(Manageable<?> object, Session session) throws Exception {
-		session.save(object.getObj());
+	public void insert(Management object, Session session) throws Exception {
+		session.save(object);
 	}
 
-	public void update(Manageable<?> object, Session session) throws Exception {
-		session.update(object.getObj());
+	public void update(Management object, Session session) throws Exception {
+		session.update(object);
 	}
 
 	public void delete(Manageable<?> object, Session session) throws Exception {
@@ -47,5 +49,13 @@ public class BaseRepositoryImpl implements BaseRepository {
 			return lst;
 		}
 		return new ArrayList<Manageable<?>>();
+	}
+
+	public void insertTransactionLog(TransactionLog tran, Session session) {
+		try {
+			session.save(tran);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
