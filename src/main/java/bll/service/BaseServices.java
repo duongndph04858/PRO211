@@ -4,13 +4,15 @@ import java.util.List;
 
 import data.Manageable;
 
-public interface BaseServices {
+public interface BaseServices<Q extends Manageable<?>> {
 
-	public String insert(Manageable<?> mng);
+	public String insert(Q mng);
 
-	public boolean update(Manageable<?> mng);
+	public String update(Q mng);
 
-	public boolean delete(Manageable<?> mng);
+	public String delete(Q mng);
+
+	public List<Q> getAll(String table);
 	
-	public List<Manageable<?>> getAll(String table);
+	public List<Q> getAllActive(String table);
 }

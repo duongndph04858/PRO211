@@ -20,6 +20,7 @@ import data.TransactionLog;
 import util.AppConstrant;
 import util.MessageUtil;
 
+@SuppressWarnings("rawtypes")
 @Service
 public class BaseServiceImpl implements BaseServices {
 
@@ -29,13 +30,13 @@ public class BaseServiceImpl implements BaseServices {
 	SessionFactory sessionFactory;
 
 	@Autowired
-	BaseRepository baseDao;
+	BaseRepository<Manageable<?>> baseDao;
 
 	@Autowired
 	BookRepository bookDao;
 
 	@Transactional
-	public String insert(Manageable<?> mng) {
+	public String insert(Manageable mng) {
 		TransactionLog tran = new TransactionLog();
 		Session session = sessionFactory.getCurrentSession();
 		try {
@@ -52,16 +53,16 @@ public class BaseServiceImpl implements BaseServices {
 						conditions.put(f.getName(), f.get(book).toString());
 					}
 				}
-				Book b = bookDao.getByInfo(conditions, session);
+				Manageable<Book> b = bookDao.getByInfo(conditions, session);
 				if (b != null) {
 					mng.setCommand(AppConstrant.UPDATE);
-					int currentAmount = b.getAmount();
-					b.setAmount(currentAmount + book.getAmount());
+					int currentAmount = b.getObj().getAmount();
+					b.getObj().setAmount(currentAmount + book.getAmount());
 					baseDao.update(b, session);
 					return AppConstrant.UPDATE_CODE;
 				}
 			} else {
-				baseDao.insert(mng.getObj(), session);
+				baseDao.insert(mng, session);
 			}
 			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
@@ -75,25 +76,44 @@ public class BaseServiceImpl implements BaseServices {
 	}
 
 	@Transactional
-	public boolean update(Manageable<?> mng) {
+	public String update(Manageable mng) {
+		TransactionLog tran = new TransactionLog();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			baseDao.update(mng.getObj(), sessionFactory.getCurrentSession());
-			return true;
+			mng.setCommand(AppConstrant.UPDATE);
+			mng.setMessage(mng.getObj().getName());
+			mng.setStatus(AppConstrant.SUCCESS);
+			tran.setUser(mng.getUserDo());
+			baseDao.update(mng, session);
+			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
+			mng.setStatus(AppConstrant.FAIL);
 			LOG.error("Fail to update " + mng);
-			return false;
+			return AppConstrant.ERROR_CODE;
+		} finally {
+			tran.setDescriptions(MessageUtil.getDescription(mng));
+			baseDao.insertTransactionLog(tran, session);
 		}
-
 	}
 
 	@Transactional
-	public boolean delete(Manageable<?> mng) {
+	public String delete(Manageable mng) {
+		TransactionLog tran = new TransactionLog();
+		Session session = sessionFactory.getCurrentSession();
 		try {
-			baseDao.delete(mng, sessionFactory.getCurrentSession());
-			return true;
+			mng.setCommand(AppConstrant.UPDATE);
+			mng.setMessage(mng.getObj().getName());
+			mng.setStatus(AppConstrant.SUCCESS);
+			tran.setUser(mng.getUserDo());
+			baseDao.delete(mng, session);
+			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
-			LOG.error("Fail to delete " + mng);
-			return false;
+			mng.setStatus(AppConstrant.FAIL);
+			LOG.error("Fail to update " + mng);
+			return AppConstrant.ERROR_CODE;
+		} finally {
+			tran.setDescriptions(MessageUtil.getDescription(mng));
+			baseDao.insertTransactionLog(tran, session);
 		}
 
 	}
@@ -119,5 +139,4 @@ public class BaseServiceImpl implements BaseServices {
 			return null;
 		}
 	}
-
 }

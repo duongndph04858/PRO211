@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import bll.repository.UserDAO;
+import bll.service.AuthenrizationServices;
 import data.User;
 import util.AppConstrant;
 
 @Controller
 public class Authentication {
 	@Autowired
-	UserDAO userDao;
+	AuthenrizationServices autServices;
 
 	@RequestMapping("login")
-	public String isLogin(@RequestParam(name = "username", required = false, defaultValue = "") String username,
-			@RequestParam(name = "password", required = false, defaultValue = "") String password,
+	public String isLogin(@RequestParam(name = "username", required = false, defaultValue = "") String username, @RequestParam(name = "password", required = false, defaultValue = "") String password,
 			RedirectAttributes redirectAttributes, ModelMap md, HttpSession session) {
 		String url = "login";
 		try {
-			User user = userDao.getUserByUsername(username);
+			User user = autServices.getUserByUsername(username);
 			if (user != null) {
 				String logUsername = user.getUsername();
 				String logPassword = user.getPassword();

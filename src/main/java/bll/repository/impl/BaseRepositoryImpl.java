@@ -9,22 +9,27 @@ import org.springframework.stereotype.Repository;
 
 import bll.repository.BaseRepository;
 import data.Manageable;
-import data.Management;
 import data.TransactionLog;
 
+@SuppressWarnings("rawtypes")
 @Repository
 public class BaseRepositoryImpl implements BaseRepository {
 
-	public void insert(Management object, Session session) throws Exception {
-		session.save(object);
+	@Override
+	public void insert(Manageable object, Session session) throws Exception {
+		session.save(object.getObj());
+
 	}
 
-	public void update(Management object, Session session) throws Exception {
-		session.update(object);
-	}
-
-	public void delete(Manageable<?> object, Session session) throws Exception {
+	@Override
+	public void delete(Manageable object, Session session) throws Exception {
 		session.delete(object.getObj());
+
+	}
+
+	@Override
+	public void update(Manageable object, Session session) throws Exception {
+		session.update(object.getObj());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,4 +63,5 @@ public class BaseRepositoryImpl implements BaseRepository {
 			e.printStackTrace();
 		}
 	}
+
 }

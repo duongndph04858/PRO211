@@ -3,19 +3,23 @@ package bll.repository.impl;
 import org.apache.commons.collections4.map.HashedMap;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import bll.repository.BookRepository;
 import data.Book;
+import data.Manageable;
 
+@Repository
 public class BookRepositoryImpl implements BookRepository {
 
-	public Book getById(String id, Session session) {
+	public Manageable<Book> getById(String id, Session session) {
 
 		return null;
 	}
 
-	public Book getByInfo(HashedMap<String, String> conditions, Session session) {
-		Book book = null;
+	@SuppressWarnings("unchecked")
+	public Manageable<Book> getByInfo(HashedMap<String, String> conditions, Session session) {
+		Manageable<Book> book = null;
 		try {
 			StringBuilder sb = new StringBuilder("from Book where ");
 			int i = 0;
@@ -28,7 +32,7 @@ public class BookRepositoryImpl implements BookRepository {
 				}
 			}
 			Query query = session.createQuery(sb.toString());
-			book = (Book) query.uniqueResult();
+			book = (Manageable<Book>) query.uniqueResult();
 			if (book != null) {
 				return book;
 			}
