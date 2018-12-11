@@ -22,39 +22,39 @@
 					<form action="dashboard/insert">
 						<div class="input-book">
 							<div class="form-group">
-								<label for="usr">Name:</label> <input type="text" name="name"
+								<label for="usr">Tên sách:</label> <input type="text" name="name"
 									value="${mng.obj.name}" class="form-control" id="usr">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Author:</label> <input type="text"
+								<label for="pwd">Tác giả:</label> <input type="text"
 									name="author" value="${mng.obj.author}" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Category:</label> <select name="category"
+								<label for="pwd">Danh mục:</label> <select name="category"
 									class="form-control"></select>
 							</div>
 							<div class="form-group">
-								<label for="pwd">Price:</label> <input type="text" name="author"
+								<label for="pwd">Giá tiền:</label> <input type="text" name="author"
 									value="${mng.obj.author}" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Publisher:</label> <input type="text"
+								<label for="pwd">Nhà xuất bản:</label> <input type="text"
 									value="${mng.obj.publisher}" name="publisher" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">BookShelf:</label> <input type="text"
+								<label for="pwd">Giá sách:</label> <input type="text"
 									value="${mng.obj.shelf}" name="shelf" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Amount:</label> <input type="text"
+								<label for="pwd">Số lượng:</label> <input type="text"
 									name="amount" value="${mng.obj.amount}" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Provider:</label> <input type="text"
+								<label for="pwd">Nguồn:</label> <input type="text"
 									value="${mng.obj.provider}" name="provider" class="form-control">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Description:</label> <input type="text"
+								<label for="pwd">Mô tả:</label> <input type="text"
 									value="${mng.obj.desciptions}" name="descriptions"
 									class="form-control">
 							</div>

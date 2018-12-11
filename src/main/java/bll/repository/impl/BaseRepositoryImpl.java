@@ -63,5 +63,4 @@ public class BaseRepositoryImpl implements BaseRepository {
 			e.printStackTrace();
 		}
 	}
-
 }

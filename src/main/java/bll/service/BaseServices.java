@@ -3,6 +3,7 @@ package bll.service;
 import java.util.List;
 
 import data.Manageable;
+import data.User;
 
 public interface BaseServices<Q extends Manageable<?>> {
 
@@ -15,4 +16,6 @@ public interface BaseServices<Q extends Manageable<?>> {
 	public List<Q> getAll(String table);
 	
 	public List<Q> getAllActive(String table);
+	
+	public String insertBatch(User user,String filename);
 }

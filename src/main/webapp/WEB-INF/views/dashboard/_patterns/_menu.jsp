@@ -14,8 +14,10 @@
 	<div id="menu-toggle" class="menu">
 		<ul class="accordion" id="accordion-1">
 			<li class="dcjq-current-parent"><a href="#"><i
-					class="fas fa-book"></i>Quản lý sách</a>
+					class="fas fa-book"></i>Sách</a>
 				<ul class="sub-menu">
+					<li class="dcjq-current-parent"><a href=""><i
+							class="fas fa-book-open"></i>Quản lý sách</a></li>
 					<li class="dcjq-current-parent"><a href="dashboard/book/insert-book"><i
 							class="fas fa-book-open"></i>Thêm mới sách</a></li>
 					<li class="dcjq-current-parent"><a href="#"><i
@@ -26,12 +28,12 @@
 							class="fas fa-book-open"></i>Tìm kiếm</a></li>
 				</ul></li>
 			<li class="dcjq-current-parent"><a href="#"><i
-					class="fas fa-book"></i>Products</a>
+					class="fas fa-book"></i>Danh mục</a>
 				<ul class="sub-menu">
 					<li class="dcjq-current-parent"><a href="#"><i
-							class="fas fa-book-open"></i>Product 1</a></li>
-					<li class="dcjq-current-parent"><a href="#"><i
-							class="fas fa-book-open"></i>Product 1</a></li>
+							class="fas fa-book-open"></i>Quản lý danh mục</a></li>
+					<li class="dcjq-current-parent"><a data-toggle="modal" data-target="#insertCategory"><i
+							class="fas fa-book-open"></i>Thêm danh mục</a></li>
 					<li class="dcjq-current-parent"><a href="#"><i
 							class="fas fa-book-open"></i>Product 1</a></li>
 					<li class="dcjq-current-parent"><a href="#"><i

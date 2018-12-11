@@ -14,10 +14,6 @@ public class BookShelf implements Management {
 
 	@Id
 	private String shelf;
-
-	@OneToMany(mappedBy = "bookshelf", fetch = FetchType.EAGER)
-	private List<Book> books;
-
 	private int line;
 	private int col;
 	private String location;
@@ -36,20 +32,6 @@ public class BookShelf implements Management {
 	 */
 	public void setShelf(String shelf) {
 		this.shelf = shelf;
-	}
-
-	/**
-	 * @return the books
-	 */
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	/**
-	 * @param books the books to set
-	 */
-	public void setBooks(List<Book> books) {
-		this.books = books;
 	}
 
 	/**

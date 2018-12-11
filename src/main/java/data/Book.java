@@ -42,7 +42,7 @@ public class Book implements Management {
 
 	@ManyToOne
 	@JoinColumn(name = "shelf")
-	private BookShelf bookshelf;
+	private String bookshelf;
 
 	private int amount;
 
@@ -158,14 +158,14 @@ public class Book implements Management {
 	/**
 	 * @return the bookshelf
 	 */
-	public BookShelf getBookshelf() {
+	public String getBookshelf() {
 		return bookshelf;
 	}
 
 	/**
 	 * @param bookshelf the bookshelf to set
 	 */
-	public void setBookshelf(BookShelf bookshelf) {
+	public void setBookshelf(String bookshelf) {
 		this.bookshelf = bookshelf;
 	}
 
