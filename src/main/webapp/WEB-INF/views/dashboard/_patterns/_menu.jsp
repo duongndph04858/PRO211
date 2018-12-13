@@ -16,7 +16,7 @@
 			<li class="dcjq-current-parent"><a href="#"><i
 					class="fas fa-book"></i>Sách</a>
 				<ul class="sub-menu">
-					<li class="dcjq-current-parent"><a href=""><i
+					<li class="dcjq-current-parent"><a href="dashboard/management/book"><i
 							class="fas fa-book-open"></i>Quản lý sách</a></li>
 					<li class="dcjq-current-parent"><a href="dashboard/book/insert-book"><i
 							class="fas fa-book-open"></i>Thêm mới sách</a></li>

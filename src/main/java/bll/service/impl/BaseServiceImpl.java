@@ -2,6 +2,7 @@ package bll.service.impl;
 
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,10 @@ import bll.repository.BaseRepository;
 import bll.repository.BookRepository;
 import bll.repository.PublisherRepository;
 import bll.service.BaseServices;
+import core.entity.Conditions;
 import data.Book;
+import data.BookCategory;
+import data.Category;
 import data.Manageable;
 import data.Publisher;
 import data.TransactionLog;
@@ -29,6 +33,7 @@ import data.User;
 import util.AppConstrant;
 import util.DateTimeUtil;
 import util.MessageUtil;
+import util.StringUtil;
 
 @SuppressWarnings("rawtypes")
 @Service
@@ -50,6 +55,7 @@ public class BaseServiceImpl implements BaseServices {
 
 	@Transactional
 	public String insert(Manageable mng) {
+		String resultCode = null;
 		TransactionLog tran = new TransactionLog();
 		Session session = sessionFactory.getCurrentSession();
 		try {
@@ -57,35 +63,44 @@ public class BaseServiceImpl implements BaseServices {
 			mng.setMessage(mng.getObj().getName());
 			mng.setStatus(AppConstrant.SUCCESS);
 			tran.setUser(mng.getUserDo());
-			if (mng.getObj() instanceof Book) {
-				Book book = (Book) mng.getObj();
+			if (mng.getObj() != null) {
 				HashedMap<String, String> conditions = new HashedMap<>();
 				Field[] fields = Book.class.getDeclaredFields();
 				for (Field f : fields) {
-					if (!"id".equals(f.getName())) {
-						conditions.put(f.getName(), f.get(book).toString());
+					f.setAccessible(true);
+					if (f.isAnnotationPresent(Conditions.class)) {
+						conditions.put(f.getName(), f.get(mng.getObj()).toString());
 					}
 				}
-				Manageable<Book> b = bookDao.getByInfo(conditions, session);
+				Manageable<?> b = baseDao.getByConditions(conditions, mng, session);
 				if (b != null) {
-					mng.setCommand(AppConstrant.UPDATE);
-					int currentAmount = b.getObj().getAmount();
-					b.getObj().setAmount(currentAmount + book.getAmount());
-					baseDao.update(b, session);
-					return AppConstrant.UPDATE_CODE;
+					if (b.getObj() instanceof Book) {
+						Book book = (Book) b.getObj();
+						mng.setCommand(AppConstrant.UPDATE);
+						int currentAmount = book.getAmount();
+						book.setAmount(currentAmount + book.getAmount());
+						baseDao.update(b, session);
+						resultCode = AppConstrant.UPDATE_CODE;
+					} else {
+						mng.setStatus(AppConstrant.FAIL);
+						mng.setCause(AppConstrant.ISEXIST);
+						resultCode = AppConstrant.ISEXIST_CODE;
+					}
+				} else {
+					baseDao.insert(mng, session);
+					resultCode = AppConstrant.SUCCESS_CODE;
 				}
-			} else {
-				baseDao.insert(mng, session);
 			}
-			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
 			mng.setStatus(AppConstrant.FAIL);
 			LOG.error("Fail to insert " + mng);
-			return AppConstrant.ERROR_CODE;
+			resultCode = AppConstrant.ERROR_CODE;
 		} finally {
+			tran.setStatus(Integer.parseInt(resultCode));
 			tran.setDescriptions(MessageUtil.getDescription(mng));
 			baseDao.insertTransactionLog(tran, session);
 		}
+		return resultCode;
 	}
 
 	public String insertBatch(User user, String excelFilename) {
@@ -93,6 +108,7 @@ public class BaseServiceImpl implements BaseServices {
 		Session session = sessionFactory.openSession();
 		String msg = "";
 		tran.setUser(user);
+		int total=0;
 		try {
 			Transaction tx = session.beginTransaction();
 			FileInputStream fis = new FileInputStream(excelFilename);
@@ -124,7 +140,34 @@ public class BaseServiceImpl implements BaseServices {
 						provider = "Old library system";
 					}
 					book.setProvider(provider);
+
+					List<BookCategory> bookCategory = new ArrayList<>();
+					String[] categories = row.getCell(11).getStringCellValue().split(",");
+					if (categories.length > 0) {
+						for (int x = 0; x < categories.length; x++) {
+							String categoryCode = StringUtil.getCode(categories[x]);
+							BookCategory category = bookDao.getCategoryById(categoryCode, session);
+							if (category == null) {
+								Manageable<Category> m1 = new Manageable<>();
+								Category c = new Category();
+								c.setId(categoryCode);
+								c.setName(categories[x]);
+								c.setDescriptions("auto insert by excel");
+								c.setStatus(1);
+								m1.setObj(c);
+								BookCategory bc = new BookCategory();
+								bc.setBook(book);
+								bc.setCategory(c);
+								bc.setStatus(1);
+								bc.setDescriptions("auto insert by excel");
+								baseDao.insert(m1, session);
+							}
+							bookCategory.add(category);
+						}
+					}
+					book.setCategory(bookCategory);
 					session.save(book);
+					total++;
 					if (j % 50 == 0) {
 						session.flush();
 						session.clear();
@@ -133,7 +176,7 @@ public class BaseServiceImpl implements BaseServices {
 			}
 			tx.commit();
 			workbook.close();
-			msg = "Thêm thành công từ file excel: " + excelFilename;
+			msg = "Thêm thành công "+total+" sách từ file excel: " + excelFilename;
 			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
 			msg = "Thêm thất bại từ file excel: " + excelFilename;

@@ -4,22 +4,29 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import core.entity.Conditions;
 
 @Entity
 @Table(name = "CATEGORY")
 public class Category implements Management {
 	@Id
 	@Column(name = "category")
+	@Conditions
 	private String id;
 
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category",fetch=FetchType.EAGER)
 	private List<BookCategory> bookCategory;
 
+	@Conditions
 	private String name;
-	private String status;
+	
+	@Conditions
+	private int status;
 	private String descriptions;
 
 	/**
@@ -61,14 +68,14 @@ public class Category implements Management {
 	/**
 	 * @return the status
 	 */
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

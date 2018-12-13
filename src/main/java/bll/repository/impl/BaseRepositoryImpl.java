@@ -3,6 +3,7 @@ package bll.repository.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -34,9 +35,8 @@ public class BaseRepositoryImpl implements BaseRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Manageable<?>> getAll(String table, Session session) throws Exception {
-		String hql = "from :table";
+		String hql = "from "+table;
 		Query query = session.createQuery(hql);
-		query.setParameter("table", table);
 		List<Manageable<?>> lst = query.list();
 		if (lst != null) {
 			return lst;
@@ -46,9 +46,8 @@ public class BaseRepositoryImpl implements BaseRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Manageable<?>> getAllActive(String table, Session currentSession) throws Exception {
-		String hql = "from :table where status=1";
+		String hql = "from "+table+" where status=1";
 		Query query = currentSession.createQuery(hql);
-		query.setParameter("table", table);
 		List<Manageable<?>> lst = query.list();
 		if (lst != null) {
 			return lst;
@@ -63,4 +62,32 @@ public class BaseRepositoryImpl implements BaseRepository {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public Manageable getByConditions(HashedMap conditions, Manageable mng, Session session) {
+		Manageable<?> result = null;
+		try {
+			StringBuilder sb = new StringBuilder("from " + mng.getObj().getClass().getName() + " where ");
+			int i = 0;
+			for (Object x : conditions.keySet()) {
+				if (i < conditions.size()) {
+					sb.append(x + "=" + conditions.get(x) + " and ");
+					i++;
+				} else {
+					sb.append(x + "=" + conditions.get(x));
+				}
+			}
+			Query query = session.createQuery(sb.toString());
+			result = (Manageable<?>) query.uniqueResult();
+			if (result != null) {
+				return result;
+			} else {
+				return mng;
+			}
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+
 }

@@ -1,12 +1,13 @@
 package data;
 
-public abstract class Manageable<T extends Management> {
+public class Manageable<T extends Management> {
 
 	private String command;
 	private T obj;
 	private User userDo;
 	private String message;
 	private String status;
+	private String cause;
 
 	public T getObj() {
 		return obj;
@@ -52,6 +53,20 @@ public abstract class Manageable<T extends Management> {
 	 */
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the cause
+	 */
+	public String getCause() {
+		return cause;
+	}
+
+	/**
+	 * @param cause the cause to set
+	 */
+	public void setCause(String cause) {
+		this.cause = cause;
 	}
 	
 	

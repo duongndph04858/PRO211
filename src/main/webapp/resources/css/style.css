@@ -406,6 +406,10 @@ a.logo span {
 	transition: all 0.3s ease;
 }
 
+.dcjq-current-parent:hover{
+	cursor: pointer;
+}
+
 .sub_menu {
 	display: none;
 	-webkit-transition: all 0.3s ease;

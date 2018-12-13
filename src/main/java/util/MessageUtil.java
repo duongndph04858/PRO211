@@ -29,7 +29,7 @@ public class MessageUtil {
 		try {
 			String type = manageable.getObj().getType();
 			notice = "Bạn vừa" + manageable.getCommand() + " " + type + " " + manageable.getMessage() + " "
-					+ manageable.getStatus();
+					+ manageable.getStatus() +manageable.getCause();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return AppConstrant.CORE_ERROR;

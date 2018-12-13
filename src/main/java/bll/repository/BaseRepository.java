@@ -2,6 +2,7 @@ package bll.repository;
 
 import java.util.List;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.hibernate.Session;
 
 import data.Manageable;
@@ -20,4 +21,6 @@ public interface BaseRepository<P extends Manageable<?>> {
 	
 	public void insertTransactionLog(TransactionLog tran,Session session);
 	
+	public P getByConditions(HashedMap<String, String> conditions,Manageable<?> mng,Session session);
+
 }

@@ -38,7 +38,7 @@ public class BookController {
 			} else {
 				mm.addAttribute("books", "Thư viện hiện đang không có sách");
 			}
-			return "dashboard/book";
+			return "dashboard/book-management";
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

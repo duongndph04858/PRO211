@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import core.entity.Conditions;
+
 @Entity
 @Table(name = "BOOK")
 public class Book implements Management {
@@ -24,12 +26,15 @@ public class Book implements Management {
 	@Column(name = "id")
 	private int id;
 
+	@Conditions
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
 	private List<BookCategory> category;
 
+	@Conditions
 	@Column(name = "name")
 	private String name;
 
+	@Conditions
 	@Column(name = "author")
 	private String author;
 
@@ -37,16 +42,17 @@ public class Book implements Management {
 	@JoinColumn(name = "publisher")
 	private Publisher publisher;
 
+	@Conditions
 	@Column(name = "price")
 	private long price;
 
-	@ManyToOne
-	@JoinColumn(name = "shelf")
+	@Column(name = "shelf")
 	private String bookshelf;
 
 	private int amount;
 
 	private int status;
+
 	private String images;
 
 	@Column(name = "date_insert")

@@ -13,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "TRANSACTIONS_LOG")
+@Table(name = "TRANSACTION_LOG")
 public class TransactionLog {
 
 	@Id

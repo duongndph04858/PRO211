@@ -9,7 +9,7 @@
 	<div class="header white-bg">
 
 		<!--logo start-->
-		<a href="index.html" class="logo"> LIBRA<span>RY<span><a
+		<a href="dashboard/home" class="logo"> LIBRA<span>RY<span><a
 					class="logo" href="http://www.animatedimages.org/cat-books-53.htm"><img
 						src="http://www.animatedimages.org/data/media/53/animated-book-image-0019.gif"
 						border="0" alt="animated-book-image-0019" /></a></a>

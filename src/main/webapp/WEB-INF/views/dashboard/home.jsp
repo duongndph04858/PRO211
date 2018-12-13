@@ -157,7 +157,7 @@
 					<h4 class="modal-title">Thêm danh mục mới</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<form action="insert-category">
+				<form action="dashboard/category/insert-category">
 					<!-- Modal body -->
 					<div class="modal-body">
 						<div class="form-group">
@@ -195,7 +195,7 @@
 					<h4 class="modal-title">Cập nhật danh mục</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<form action="update-category">
+				<form action="dashboard/category/update-category">
 					<!-- Modal body -->
 					<div class="modal-body">
 						<div class="form-group">
