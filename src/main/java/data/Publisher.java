@@ -2,22 +2,29 @@ package data;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import core.entity.Conditions;
 
 @Entity
 @Table(name = "PUBLISHER")
 public class Publisher implements Management {
 	@Id
+	@Conditions
 	@Column(name = "publisher")
-	private String publisher;
-	@OneToMany(mappedBy = "publisher")
+	private String id;
+	@OneToMany(mappedBy = "publisher",fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<Book> books;
+	@Conditions
 	@Column(name = "name")
 	private String name;
+	@Conditions
 	@Column(name = "status")
 	private int status;
 	@Column(name = "address")
@@ -34,22 +41,26 @@ public class Publisher implements Management {
 	/**
 	 * @return the publisher
 	 */
-	public String getPublisher() {
-		return publisher;
-	}
-
-	/**
-	 * @param publisher the publisher to set
-	 */
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
 
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**

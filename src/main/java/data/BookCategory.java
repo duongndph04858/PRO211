@@ -7,21 +7,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import core.entity.Conditions;
+
 @Entity
 @Table(name = "BOOK_CATEGORY")
-public class BookCategory {
+public class BookCategory implements Management {
 	@Id
 	@GeneratedValue
+	@Conditions
 	private int id;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "category")
-	private Category category;
+	private Category categ;
 
 	@ManyToOne
 	@JoinColumn(name = "book")
 	private Book book;
 
+	@Conditions
 	private int status;
 	private String descriptions;
 
@@ -40,17 +44,17 @@ public class BookCategory {
 	}
 
 	/**
-	 * @return the category
+	 * @return the categ
 	 */
-	public Category getCategory() {
-		return category;
+	public Category getCateg() {
+		return categ;
 	}
 
 	/**
-	 * @param category the category to set
+	 * @param categ the categ to set
 	 */
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCateg(Category categ) {
+		this.categ = categ;
 	}
 
 	/**
@@ -101,6 +105,18 @@ public class BookCategory {
 	public BookCategory() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "sách-danh mục";
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "";
 	}
 
 }

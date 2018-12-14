@@ -27,6 +27,7 @@ import data.Book;
 import data.BookCategory;
 import data.Category;
 import data.Manageable;
+import data.Management;
 import data.Publisher;
 import data.TransactionLog;
 import data.User;
@@ -53,6 +54,7 @@ public class BaseServiceImpl implements BaseServices {
 	@Autowired
 	PublisherRepository publisherDao;
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public String insert(Manageable mng) {
 		String resultCode = null;
@@ -65,21 +67,22 @@ public class BaseServiceImpl implements BaseServices {
 			tran.setUser(mng.getUserDo());
 			if (mng.getObj() != null) {
 				HashedMap<String, String> conditions = new HashedMap<>();
-				Field[] fields = Book.class.getDeclaredFields();
+				Field[] fields = mng.getObj().getClass().getDeclaredFields();
 				for (Field f : fields) {
 					f.setAccessible(true);
 					if (f.isAnnotationPresent(Conditions.class)) {
 						conditions.put(f.getName(), f.get(mng.getObj()).toString());
 					}
 				}
-				Manageable<?> b = baseDao.getByConditions(conditions, mng, session);
+				Management b = baseDao.getByConditions(conditions, mng.getObj().getClass(), session);
 				if (b != null) {
-					if (b.getObj() instanceof Book) {
-						Book book = (Book) b.getObj();
+					if (b instanceof Book) {
+						Book book = (Book) mng.getObj();
 						mng.setCommand(AppConstrant.UPDATE);
-						int currentAmount = book.getAmount();
-						book.setAmount(currentAmount + book.getAmount());
-						baseDao.update(b, session);
+						int currentAmount = ((Book) b).getAmount();
+						((Book) b).setAmount(currentAmount + book.getAmount());
+						mng.setObj(b);
+						baseDao.update(mng, session);
 						resultCode = AppConstrant.UPDATE_CODE;
 					} else {
 						mng.setStatus(AppConstrant.FAIL);
@@ -93,6 +96,7 @@ public class BaseServiceImpl implements BaseServices {
 			}
 		} catch (Exception e) {
 			mng.setStatus(AppConstrant.FAIL);
+			mng.setCause(e.getMessage());
 			LOG.error("Fail to insert " + mng);
 			resultCode = AppConstrant.ERROR_CODE;
 		} finally {
@@ -108,7 +112,7 @@ public class BaseServiceImpl implements BaseServices {
 		Session session = sessionFactory.openSession();
 		String msg = "";
 		tran.setUser(user);
-		int total=0;
+		int total = 0;
 		try {
 			Transaction tx = session.beginTransaction();
 			FileInputStream fis = new FileInputStream(excelFilename);
@@ -124,7 +128,7 @@ public class BaseServiceImpl implements BaseServices {
 					Publisher pb = publisherDao.getById(publisher);
 					if (pb == null) {
 						pb = new Publisher();
-						pb.setPublisher(publisher);
+						pb.setId(publisher);
 						pb.setStatus(1);
 						pb.setDescriptions("Auto insert when insert by excel");
 					}
@@ -157,7 +161,8 @@ public class BaseServiceImpl implements BaseServices {
 								m1.setObj(c);
 								BookCategory bc = new BookCategory();
 								bc.setBook(book);
-								bc.setCategory(c);
+								bc.setCateg(c);
+								;
 								bc.setStatus(1);
 								bc.setDescriptions("auto insert by excel");
 								baseDao.insert(m1, session);
@@ -176,7 +181,7 @@ public class BaseServiceImpl implements BaseServices {
 			}
 			tx.commit();
 			workbook.close();
-			msg = "Thêm thành công "+total+" sách từ file excel: " + excelFilename;
+			msg = "Thêm thành công " + total + " sách từ file excel: " + excelFilename;
 			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
 			msg = "Thêm thất bại từ file excel: " + excelFilename;
@@ -221,6 +226,7 @@ public class BaseServiceImpl implements BaseServices {
 			baseDao.delete(mng, session);
 			return AppConstrant.SUCCESS_CODE;
 		} catch (Exception e) {
+			mng.setCause(e.getMessage());
 			mng.setStatus(AppConstrant.FAIL);
 			LOG.error("Fail to update " + mng);
 			return AppConstrant.ERROR_CODE;
@@ -231,7 +237,7 @@ public class BaseServiceImpl implements BaseServices {
 
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<Manageable<?>> getAll(String table) {
 		try {
 			List<Manageable<?>> lst = baseDao.getAll(table, sessionFactory.getCurrentSession());
@@ -242,7 +248,7 @@ public class BaseServiceImpl implements BaseServices {
 		}
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<Manageable<?>> getAllActive(String table) {
 		try {
 			List<Manageable<?>> lst = baseDao.getAllActive(table, sessionFactory.getCurrentSession());
@@ -252,4 +258,17 @@ public class BaseServiceImpl implements BaseServices {
 			return null;
 		}
 	}
+
+	@Override																																	
+	@Transactional
+	public Management getById(String id, Class mng) {
+		try {
+			Management result = baseDao.getById(id, mng, sessionFactory.getCurrentSession());
+			return result;
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+			return null;
+		}
+	}
+
 }

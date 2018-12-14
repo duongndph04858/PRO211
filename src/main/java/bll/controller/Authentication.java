@@ -27,7 +27,7 @@ public class Authentication {
 			if (user != null) {
 				String logUsername = user.getUsername();
 				String logPassword = user.getPassword();
-				if (logUsername.equals(username) && logPassword.equals(password)) {
+				if (username.equals(logUsername) && password.equals(logPassword)) {
 					session.setAttribute("user", user);
 					url = "redirect:/dashboard";
 					redirectAttributes.addFlashAttribute("msg", "Xin chào, " + user.getFullname());

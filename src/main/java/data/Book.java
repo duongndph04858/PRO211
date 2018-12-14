@@ -3,6 +3,7 @@ package data;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,8 +27,7 @@ public class Book implements Management {
 	@Column(name = "id")
 	private int id;
 
-	@Conditions
-	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<BookCategory> category;
 
 	@Conditions

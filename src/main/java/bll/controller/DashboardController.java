@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import bll.service.BaseServices;
+import data.BookCategory;
 import data.Category;
 import data.Manageable;
 import data.User;
@@ -33,7 +35,7 @@ public class DashboardController {
 			} else {
 				mm.addAttribute("categories", "Danh mục thư viện trống");
 			}
-			url = "dashboard/category";
+			url = "dashboard/category-management";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,7 +44,7 @@ public class DashboardController {
 
 	@RequestMapping("dashboard/category/insert-category")
 	public String insert(@RequestParam String id, @RequestParam String name, @RequestParam String descriptions,
-			ModelMap mm, HttpServletRequest request) {
+			RedirectAttributes redirectAttributes, ModelMap mm, HttpServletRequest request) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
 			Manageable<Category> mng = new Manageable<>();
@@ -59,10 +61,10 @@ public class DashboardController {
 				mng.setUserDo(user);
 				String result = baseServices.insert(mng);
 				if (!AppConstrant.ERROR_CODE.equals(result)) {
-					url = "redirect:/dashboard";
+					url = "redirect:/dashboard/management/category";
 					notice = MessageUtil.getNoticeMsg(mng);
 				}
-				mm.addAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
+				redirectAttributes.addFlashAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
 			} else {
 				mm.addAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE,
 						"Phiên làm việc đã kết thúc, vui lòng đăng nhập lại");
@@ -70,6 +72,43 @@ public class DashboardController {
 			}
 		} catch (Exception e) {
 			mm.addAttribute(AppConstrant.APP_ERR_MODELATTRIBUTE, AppConstrant.APP_ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		return url;
+	}
+
+	@RequestMapping("dashboard/category/delete-category")
+	public String deleteCategory(@RequestParam String id, RedirectAttributes redirectAttributes,
+			HttpServletRequest request, ModelMap mm) {
+		String url = AppConstrant.APP_ERROR_URL;
+		String notice = "";
+		try {
+			Manageable<Category> mng = new Manageable<>();
+			Category category = (Category) baseServices.getById(id, Category.class);
+			if (category.getBookCategory().size() > 0) {
+				url = "redirect:/dashboard/management/category";
+				notice = "Không thể xóa danh mục đang có sách";
+				redirectAttributes.addFlashAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
+				return url;
+			}
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("user");
+			if (user != null) {
+				mng.setUserDo(user);
+				String result = baseServices.delete(mng);
+				if (!AppConstrant.ERROR_CODE.equals(result)) {
+					url = "redirect:/dashboard/management/category";
+					notice = MessageUtil.getNoticeMsg(mng);
+				}
+				redirectAttributes.addFlashAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
+			} else {
+				mm.addAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE,
+						"Phiên làm việc đã kết thúc, vui lòng đăng nhập lại");
+				url = "login";
+			}
+		} catch (Exception e) {
+			mm.addAttribute(AppConstrant.APP_ERR_MODELATTRIBUTE, AppConstrant.APP_ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 		return url;
 	}

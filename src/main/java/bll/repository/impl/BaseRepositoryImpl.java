@@ -1,7 +1,10 @@
 package bll.repository.impl;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Id;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.hibernate.Query;
@@ -9,7 +12,9 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import bll.repository.BaseRepository;
+import core.entity.Conditions;
 import data.Manageable;
+import data.Management;
 import data.TransactionLog;
 
 @SuppressWarnings("rawtypes")
@@ -35,7 +40,7 @@ public class BaseRepositoryImpl implements BaseRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Manageable<?>> getAll(String table, Session session) throws Exception {
-		String hql = "from "+table;
+		String hql = "from " + table;
 		Query query = session.createQuery(hql);
 		List<Manageable<?>> lst = query.list();
 		if (lst != null) {
@@ -46,7 +51,7 @@ public class BaseRepositoryImpl implements BaseRepository {
 
 	@SuppressWarnings("unchecked")
 	public List<Manageable<?>> getAllActive(String table, Session currentSession) throws Exception {
-		String hql = "from "+table+" where status=1";
+		String hql = "from " + table + " where status=1";
 		Query query = currentSession.createQuery(hql);
 		List<Manageable<?>> lst = query.list();
 		if (lst != null) {
@@ -64,30 +69,61 @@ public class BaseRepositoryImpl implements BaseRepository {
 	}
 
 	@Override
-	public Manageable getByConditions(HashedMap conditions, Manageable mng, Session session) {
-		Manageable<?> result = null;
+	public Management getByConditions(HashedMap conditions, Class mng, Session session) {
+		Management result = null;
 		try {
-			StringBuilder sb = new StringBuilder("from " + mng.getObj().getClass().getName() + " where ");
+			StringBuilder sb = new StringBuilder("from " + mng.getClass().getName() + " where ");
 			int i = 0;
 			for (Object x : conditions.keySet()) {
-				if (i < conditions.size()) {
-					sb.append(x + "=" + conditions.get(x) + " and ");
+				if (i < conditions.size() - 1) {
+					sb.append(x + "=:" + x + " and ");
 					i++;
 				} else {
-					sb.append(x + "=" + conditions.get(x));
+					sb.append(x + "=:" + x);
 				}
 			}
 			Query query = session.createQuery(sb.toString());
-			result = (Manageable<?>) query.uniqueResult();
-			if (result != null) {
-				return result;
-			} else {
-				return mng;
+			for (Object x : conditions.keySet()) {
+				try {
+					long param =Long.parseLong(conditions.get(x).toString());
+					query.setLong(x.toString(), param);
+				} catch (NumberFormatException e) {
+					query.setParameter(x.toString(), conditions.get(x));
+				}
 			}
+			result = (Management) query.uniqueResult();
 		} catch (Exception e) {
-			return null;
+			e.printStackTrace();
 		}
+		return result;
 	}
 
+	public Management getById(String id, Class mng, Session session) {
+		Management result = null;
+		try {
+			Class clazz = mng;
+//			String[] spl = clazz.getName().split(".");
 
+			StringBuilder sb = new StringBuilder("from " + clazz.getName() + " where ");
+			Field[] fields = clazz.getDeclaredFields();
+			for (Field f : fields) {
+				f.setAccessible(true);
+				if (f.isAnnotationPresent(Id.class)) {
+					sb.append(f.getName() + "=:" + f.getName());
+					Query query = session.createQuery(sb.toString());
+					try {
+						int x = Integer.parseInt(id);
+						query.setInteger(f.getName(), x);
+					} catch (NumberFormatException e) {
+						query.setParameter(f.getName(), id);
+					}
+					result = (Management) query.uniqueResult();
+					break;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
