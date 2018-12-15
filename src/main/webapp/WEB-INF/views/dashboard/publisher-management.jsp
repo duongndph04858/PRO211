@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Quản lý danh mục</title>
+<title>Quản lý nhà xuất bản</title>
 <base href="${pageContext.servletContext.contextPath}/">
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -58,17 +58,19 @@
 				<thead class="thead-light">
 					<tr>
 						<th class="" scope="col">STT</th>
-						<th scope="col">Mã danh mục</th>
-						<th scope="col">Tên danh mục</th>
+						<th scope="col">Mã Nhà xuất bản</th>
+						<th scope="col">Tên Nhà xuất bản</th>
 						<th scope="col">Trạng thái</th>
+						<th scope="col">Địa chỉ</th>
+						<th scope="col">Email</th>
 						<th scope="col">Mô tả</th>
 						<th class="" scope="col">Thao tác</th>
 					</tr>
 				</thead>
 				<tbody id="table">
 					<c:choose>
-						<c:when test="${categories != null }">
-							<c:forEach var="c" items="${categories}" varStatus="stt">
+						<c:when test="${publisher != null }">
+							<c:forEach var="c" items="${publisher}" varStatus="stt">
 								<tr>
 									<th scope="row">${stt.index+1 }</th>
 									<td id="product-id">${c.id }</td>
@@ -78,11 +80,13 @@
 											<c:when test="${c.status == 2}">Đã đóng</c:when>
 											<c:otherwise> Không xác định</c:otherwise>
 										</c:choose></td>
+									<td>${c.address}</td>
+									<td>${c.email}</td>
 									<td>${c.descriptions }</td>
 									<td><a id="icon-update" href=""><i class="fas fa-pencil-alt icon-action"></i>
-										&nbsp; <a id="icon-delete" class="dltCategory"
+										&nbsp; <a id="icon-delete" class="dltProduct"
 										data-id="${c.id }"> <i class="fas fa-trash-alt icon-action"
-											data-toggle="modal" data-target="#deleteCategoryModal"
+											data-toggle="modal" data-target="#deleteProductModal"
 											aria-hidden="true"></i>
 									</a></td>
 								</tr>
@@ -95,29 +99,6 @@
 				</tbody>
 			</table>
 		</section>
-	</div>
-		<!-- Modal Delete -->
-	<div class="modal fade" id="deleteCategoryModal" tabindex="-1"
-		role="dialog" aria-labelledby="deleteProductModal" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="deleteProductModal">Xóa danh mục</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">Bạn thực sự muốn xóa danh mục này?</div>
-				<div class="modal-footer">
-					<form id="form-delete" action="" method="post">
-						<button type="submit" class="btn btn-danger">Xóa</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Hủy</button>
-					</form>
-				</div>
-			</div>
-		</div>
 	</div>
 	<jsp:include page="_patterns/_footer.jsp"></jsp:include>
 </body>

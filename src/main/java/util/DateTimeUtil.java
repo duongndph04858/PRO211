@@ -8,6 +8,11 @@ public class DateTimeUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		return sdf.format(new Date());
 	}
+	
+	public static String getDateTime(Date date,String pattern) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		return sdf.format(date);
+	}
 
 	public static Date parse(String date) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

@@ -9,7 +9,7 @@
 	<div class="header white-bg">
 
 		<!--logo start-->
-		<a href="dashboard/home" class="logo"> LIBRA<span>RY<span><a
+		<a href="dashboard" class="logo"> LIBRA<span>RY<span><a
 					class="logo" href="http://www.animatedimages.org/cat-books-53.htm"><img
 						src="http://www.animatedimages.org/data/media/53/animated-book-image-0019.gif"
 						border="0" alt="animated-book-image-0019" /></a></a>
@@ -26,7 +26,7 @@
 				<li class="dropdown"><a data-toggle="dropdown"
 					class="dropdown-toggle" href="#"> <img alt=""
 						src="resources/images/avatar1_small.jpg"> <span
-						class="username">Jhon Doue</span> <b class="caret"></b>
+						class="username">${user.fullname }</span> <b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu extended logout">
 						<div class="log-arrow-up"></div>

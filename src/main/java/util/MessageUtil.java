@@ -30,7 +30,7 @@ public class MessageUtil {
 		String notice = "Create Notice";
 		try {
 			String type = nvl(manageable.getObj().getType(), "");
-			notice = "Bạn vừa" + nvl(manageable.getCommand(), "") + " " + type + ": "
+			notice = "Bạn vừa " + nvl(manageable.getCommand(), "") + " " + type + ": "
 					+ nvl(manageable.getMessage(), "") + " " + nvl(manageable.getStatus(), "") + " "
 					+ nvl(manageable.getCause(), "");
 		} catch (Exception e) {

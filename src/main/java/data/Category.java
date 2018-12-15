@@ -2,10 +2,8 @@ package data;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,32 +23,12 @@ public class Category implements Management {
 	private List<BookCategory> bookCategory;
 
 	@Conditions
+	@Column(name="name")
 	private String name;
 
-	@Conditions
 	private int status;
 	private String descriptions;
 
-	@Transient
-	private int totalBook;
-
-	/**
-	 * @return the totalBook
-	 */
-	public int getTotalBook() {
-		totalBook = 0;
-		for (BookCategory x : bookCategory) {
-			totalBook += x.getBook().getAmount();
-		}
-		return totalBook;
-	}
-
-	/**
-	 * @param totalBook the totalBook to set
-	 */
-	public void setTotalBook(int totalBook) {
-		this.totalBook = totalBook;
-	}
 
 	/**
 	 * 

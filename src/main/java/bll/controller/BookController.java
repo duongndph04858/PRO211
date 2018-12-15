@@ -15,7 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import bll.service.BaseServices;
 import bll.service.CategoryServices;
@@ -45,6 +45,7 @@ public class BookController {
 	public String getAll(ModelMap mm) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
+			@SuppressWarnings("unchecked")
 			List<Manageable<Book>> books = baseServices.getAll(Book.class.getName());
 			mm.addAttribute("books", books);
 			return "dashboard/book-management";
@@ -54,6 +55,7 @@ public class BookController {
 		return url;
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping("dashboard/book/insert-book")
 	public String insertInput(ModelMap mm) {
 		String url = AppConstrant.APP_ERROR_URL;
@@ -78,10 +80,10 @@ public class BookController {
 			@RequestParam String author, @RequestParam long price, @RequestParam String publisher,
 			@RequestParam String bookshelf, @RequestParam int amount, @RequestParam String provider,
 			@RequestParam String descriptions, @RequestParam String[] ctg, @RequestParam MultipartFile image,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributesModelMap redirectAttributes) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
-			String notice = "";
+			String notice = null;
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
@@ -162,7 +164,7 @@ public class BookController {
 	public String insertByExcel(HttpServletRequest request, ModelMap mm, @RequestParam String filename) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
-			String notice = "";
+			String notice = null;
 			HttpSession session = request.getSession();
 			User user = (User) session.getAttribute("user");
 			if (user != null) {

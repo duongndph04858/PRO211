@@ -12,7 +12,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import bll.repository.BaseRepository;
-import core.entity.Conditions;
 import data.Manageable;
 import data.Management;
 import data.TransactionLog;
@@ -72,7 +71,7 @@ public class BaseRepositoryImpl implements BaseRepository {
 	public Management getByConditions(HashedMap conditions, Class mng, Session session) {
 		Management result = null;
 		try {
-			StringBuilder sb = new StringBuilder("from " + mng.getClass().getName() + " where ");
+			StringBuilder sb = new StringBuilder("from " + mng.getName() + " where ");
 			int i = 0;
 			for (Object x : conditions.keySet()) {
 				if (i < conditions.size() - 1) {
@@ -85,10 +84,12 @@ public class BaseRepositoryImpl implements BaseRepository {
 			Query query = session.createQuery(sb.toString());
 			for (Object x : conditions.keySet()) {
 				try {
-					long param =Long.parseLong(conditions.get(x).toString());
+					long param = Long.parseLong(conditions.get(x).toString());
 					query.setLong(x.toString(), param);
 				} catch (NumberFormatException e) {
-					query.setParameter(x.toString(), conditions.get(x));
+					String param = x.toString();
+					String value = conditions.get(x).toString();
+					query.setParameter(param, value);
 				}
 			}
 			result = (Management) query.uniqueResult();

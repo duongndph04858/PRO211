@@ -15,7 +15,7 @@
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- Spring MVC Annotation -->
-	<context:annotation-config />
+	<context:annotation-config/>
 	<mvc:annotation-driven />
 
 	<mvc:resources mapping="/resources/**"

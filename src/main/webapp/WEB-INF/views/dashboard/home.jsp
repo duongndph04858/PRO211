@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
+<base href="${pageContext.servletContext.contextPath}/">
 <meta charset="UTF-8">
 <title>Trang chủ</title>
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
@@ -143,9 +145,10 @@
 					<!-- end Graph HTML -->
 				</div>
 			</div>
-
 		</section>
 	</div>
 	<jsp:include page="_patterns/_footer.jsp"></jsp:include>
+	<script src="resources/js/jquery.flot.min.js"></script>
+	<script type='text/javascript' src="resources/js/custom.js"></script>
 </body>
 </html>
