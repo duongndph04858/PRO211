@@ -113,8 +113,8 @@ public class BaseRepositoryImpl implements BaseRepository {
 					sb.append(f.getName() + "=:" + f.getName());
 					Query query = session.createQuery(sb.toString());
 					try {
-						int x = Integer.parseInt(id);
-						query.setInteger(f.getName(), x);
+						long x = Long.parseLong(id);
+						query.setLong(f.getName(), x);
 					} catch (NumberFormatException e) {
 						query.setParameter(f.getName(), id);
 					}

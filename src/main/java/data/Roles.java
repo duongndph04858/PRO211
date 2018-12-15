@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class Roles {
 	@Id
 	@Column(name = "id")
-	private int id;
+	private long id;
 
 	@OneToMany(mappedBy = "position", fetch = FetchType.EAGER)
 	private List<User> user;
@@ -31,14 +31,14 @@ public class Roles {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

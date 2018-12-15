@@ -148,7 +148,5 @@
 		</section>
 	</div>
 	<jsp:include page="_patterns/_footer.jsp"></jsp:include>
-	<script src="resources/js/jquery.flot.min.js"></script>
-	<script type='text/javascript' src="resources/js/custom.js"></script>
 </body>
 </html>

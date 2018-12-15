@@ -18,6 +18,8 @@
 					class="fas fa-book"></i>Sách</a>
 				<ul class="sub-menu">
 					<li class="dcjq-current-parent"><a
+						href="dashboard/inquiry"><i class="fas fa-book-open"></i>Tạo thẻ mượn</a></li>
+					<li class="dcjq-current-parent"><a
 						href="dashboard/management/book"><i class="fas fa-book-open"></i>Quản
 							lý sách</a></li>
 					<li class="dcjq-current-parent"><a

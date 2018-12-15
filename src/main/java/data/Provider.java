@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Provider implements Management {
 	@Id
 	@GeneratedValue
-	private int id;
+	private long id;
 
 	private String name;
 	private String address;
@@ -33,14 +33,14 @@ public class Provider implements Management {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

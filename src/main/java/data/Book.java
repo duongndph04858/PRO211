@@ -25,7 +25,7 @@ public class Book implements Management {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private int id;
+	private long id;
 
 	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	private List<BookCategory> category;
@@ -80,14 +80,14 @@ public class Book implements Management {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

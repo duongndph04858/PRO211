@@ -56,40 +56,43 @@
 		</section>
 		<br>
 		<section class="tb-box">
-			<form action="dashboard/issue" method="post">
-				<table>
-					<tr>
-						<td>Số thẻ:</td>
-						<td>${c.seri }</td>
-						<td>Tên người dùng:</td>
-						<td>${c.fullname }</td>
-					</tr>
-					<tr>
-						<td>Số điện thoại:</td>
-						<td>${c.user.phone }</td>
-						<td>Email:</td>
-						<td>${c.user.email }</td>
-					</tr>
-					<tr>
-						<td>Lớp:</td>
-						<td>${c.user.classroom }</td>
-						<td>Loại thẻ:</td>
-						<td>${card.card.name }</td>
-					</tr>
-					<tr>
-						<td>Ngày tạo:</td>
-						<td>${c.dateCreate }</td>
-						<td>Ngày hết hạn:</td>
-						<td>${c.dateExpire }</td>
-					</tr>
-					<tr>
-						<td>Trạng thái:</td>
-						<td>${c.status }</td>
-						<td>Số sách có thể mươn:</td>
-						<td>${c.loanTime }</td>
-					</tr>
-				</table>
-				<button class="btn btn-success" disabled="${disable }" type="submit">Mượn sách</button>
+			<form style="padding: 20px;" action="dashboard/issue" method="post">
+				<c:if test="${not empty c}">
+					<table>
+						<tr>
+							<td>Số thẻ:</td>
+							<td>${c.seri }</td>
+							<td>Tên người dùng:</td>
+							<td>${c.fullname }</td>
+						</tr>
+						<tr>
+							<td>Số điện thoại:</td>
+							<td>${c.user.phone }</td>
+							<td>Email:</td>
+							<td>${c.user.email }</td>
+						</tr>
+						<tr>
+							<td>Lớp:</td>
+							<td>${c.user.classroom }</td>
+							<td>Loại thẻ:</td>
+							<td>${c.card.name }</td>
+						</tr>
+						<tr>
+							<td>Ngày tạo:</td>
+							<td>${c.dateCreate }</td>
+							<td>Ngày hết hạn:</td>
+							<td>${c.dateExpire }</td>
+						</tr>
+						<tr>
+							<td>Trạng thái:</td>
+							<td>${c.status }</td>
+							<td>Số sách có thể mươn:</td>
+							<td>${c.loanTime }</td>
+						</tr>
+					</table>
+				</c:if>
+				<button class="btn btn-success" disabled="${disable }" type="submit">Mượn
+					sách</button>
 			</form>
 		</section>
 	</div>

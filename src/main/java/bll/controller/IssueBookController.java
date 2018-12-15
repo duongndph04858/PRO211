@@ -1,8 +1,6 @@
 package bll.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,11 +30,11 @@ public class IssueBookController {
 
 	@RequestMapping("dashboard/inquiry")
 	public String issueInput() {
-		return "dashboard/issue-book";
+		return "dashboard/inquiry-card";
 	}
 
 	@RequestMapping("dashboard/issue")
-	public String inquiry(@RequestParam String seri, RedirectAttributesModelMap redirectAttributes, ModelMap mm,
+	public String inquiry(@RequestParam long seri, RedirectAttributesModelMap redirectAttributes, ModelMap mm,
 			HttpServletRequest request) {
 		String url = AppConstrant.APP_ERROR_URL;
 		try {
@@ -44,12 +42,12 @@ public class IssueBookController {
 			User user = (User) session.getAttribute("user");
 			if (user != null) {
 				String notice = "";
-				Card card = (Card) baseServices.getById(seri, Card.class);
+				Card card = (Card) baseServices.getById(String.valueOf(seri), Card.class);
 				if (card == null) {
 					notice = "Truy vấn thông tin thẻ thất bại";
 					redirectAttributes.addFlashAttribute(AppConstrant.APP_NOTICE_MODELATTRIBUTE, notice);
 				} else {
-					session.setAttribute("preCard", card);
+					session.setAttribute("c", card);
 					if (card.getLoanTime() == 0) {
 						mm.addAttribute("disable", true);
 					}

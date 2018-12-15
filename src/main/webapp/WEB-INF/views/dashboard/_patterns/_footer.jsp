@@ -219,5 +219,7 @@
 		$('#modalNotice').modal('show');
 	});
 </script>
+<script src="resources/js/jquery.flot.min.js"></script>
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script type='text/javascript' src="resources/js/custom.js"></script>
 </html>

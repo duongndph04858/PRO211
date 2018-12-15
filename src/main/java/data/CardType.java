@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -14,7 +15,8 @@ import javax.persistence.Table;
 public class CardType implements Management {
 
 	@Id
-	private int id;
+	@GeneratedValue
+	private long id;
 
 	@OneToMany(mappedBy = "card", fetch = FetchType.EAGER)
 	private Set<Card> listCard;
@@ -32,14 +34,14 @@ public class CardType implements Management {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
